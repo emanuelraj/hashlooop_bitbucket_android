@@ -13,7 +13,7 @@ public class PostLooopRequest {
     private Double mLat;
     @SerializedName("longitude")
     private Double mLong;
-    @SerializedName("status")
+    @SerializedName("looop")
     private String mStatus;
 
     public String getUserId() {
