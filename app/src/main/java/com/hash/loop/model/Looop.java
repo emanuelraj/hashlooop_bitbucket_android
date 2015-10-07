@@ -1,4 +1,3 @@
-
 package com.hash.loop.model;
 
 import com.google.gson.annotations.Expose;
@@ -18,74 +17,78 @@ public class Looop {
     @SerializedName("distance")
     @Expose
     private Double distance;
+    @Expose
+    private String name;
+    @Expose
+    private String relationship;
+
+    public String getRelationship() {
+        return relationship;
+    }
+
+    public void setRelationship(String relationship) {
+        this.relationship = relationship;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     /**
-     * 
-     * @return
-     *     The id
+     * @return The id
      */
     public Integer getId() {
         return id;
     }
 
     /**
-     * 
-     * @param id
-     *     The id
+     * @param id The id
      */
     public void setId(Integer id) {
         this.id = id;
     }
 
     /**
-     * 
-     * @return
-     *     The userId
+     * @return The userId
      */
     public Integer getUserId() {
         return userId;
     }
 
     /**
-     * 
-     * @param userId
-     *     The user_id
+     * @param userId The user_id
      */
     public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
     /**
-     * 
-     * @return
-     *     The status
+     * @return The status
      */
     public String getStatus() {
         return status;
     }
 
     /**
-     * 
-     * @param status
-     *     The status
+     * @param status The status
      */
     public void setStatus(String status) {
         this.status = status;
     }
 
     /**
-     * 
-     * @return
-     *     The distance
+     * @return The distance
      */
     public Double getDistance() {
         return distance;
     }
 
     /**
-     * 
-     * @param distance
-     *     The distance
+     * @param distance The distance
      */
     public void setDistance(Double distance) {
         this.distance = distance;

@@ -5,6 +5,23 @@
               android:orientation="vertical"
               tools:context="com.hash.loop.ComposeLooopActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/AppTheme.Toolbar">
+
+        <TextView
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Post Loops"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/abc_text_size_title_material_toolbar"/>
+
+    </android.support.v7.widget.Toolbar>
+
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -14,19 +31,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lines="5"
+            android:inputType="textCapSentences|textMultiLine"
             android:textSize="17sp"/>
 
     </android.support.design.widget.TextInputLayout>
 
-    <TextView
-        android:id="@+id/post"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
-        android:gravity="center"
-        android:padding="10dp"
-        android:layout_marginTop="30dp"
-        android:text="@string/post"
-        android:textColor="@android:color/white"/>
+        style="@style/AppTheme.ButtonAccent"
+        android:foreground="?attr/selectableItemBackground">
+
+        <TextView
+            android:id="@+id/post"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:padding="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/post"
+            android:textColor="@android:color/white"/>
+
+    </FrameLayout>
+
 
 </LinearLayout>

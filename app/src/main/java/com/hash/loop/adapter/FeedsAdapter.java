@@ -14,11 +14,14 @@ import android.widget.TextView;
 
 import com.hash.loop.R;
 import com.hash.loop.model.Looop;
+import com.hash.loop.model.LooopLikeRequest;
+import com.hash.loop.utils.MySharedPreference;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by mathan on 26/9/15.
@@ -27,9 +30,12 @@ public class FeedsAdapter extends RecyclerView.Adapter<FeedsAdapter.ViewHolder> 
 
     private Context mContext;
     private List<Looop> mLooopList;
+    private EventBus mBus = EventBus.getDefault();
+    private MySharedPreference mPrefs;
 
     public FeedsAdapter(Context context) {
         mContext = context;
+        mPrefs = new MySharedPreference(mContext);
     }
 
     public void updateFeedsAdapter(List<Looop> looops) {
@@ -46,8 +52,9 @@ public class FeedsAdapter extends RecyclerView.Adapter<FeedsAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Looop looop = mLooopList.get(position);
-        holder.mListItem.setText(looop.getStatus() + "  -  " + looop.getUserId());
-        //enterReveal(holder.mListItem);
+        holder.mLooopDetail.setText(looop.getName());
+        holder.mLike.setTag(looop.getId());
+        holder.mLooopContent.setText(looop.getStatus());
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -77,15 +84,34 @@ public class FeedsAdapter extends RecyclerView.Adapter<FeedsAdapter.ViewHolder> 
         return mLooopList == null ? 0 : mLooopList.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.list_item)
-        TextView mListItem;
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        @Bind(R.id.looop_details)
+        TextView mLooopDetail;
+        @Bind(R.id.looop_content)
+        TextView mLooopContent;
         @Bind(R.id.card_view)
         CardView mCardView;
+        @Bind(R.id.like)
+        TextView mLike;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            TextView likeView = (TextView) itemView.findViewById(R.id.like);
+            likeView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.like:
+                    mLike.setSelected(!mLike.isSelected());
+                    LooopLikeRequest likeRequest = new LooopLikeRequest();
+                    likeRequest.setUserId(mPrefs.getUserId());
+                    likeRequest.setLooopId(""+(int) v.getTag());
+                    mBus.post(likeRequest);
+                    break;
+            }
         }
     }
 

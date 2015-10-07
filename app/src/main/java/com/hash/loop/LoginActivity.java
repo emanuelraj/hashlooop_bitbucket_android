@@ -1,5 +1,6 @@
 package com.hash.loop;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -20,6 +21,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -85,6 +87,11 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             showToast(R.string.please_check_username_or_password);
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     private void showToast(final int resId) {

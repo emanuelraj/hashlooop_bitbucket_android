@@ -1,5 +1,6 @@
 package com.hash.loop;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -26,6 +27,7 @@ import rx.Subscription;
 import rx.android.widget.OnTextChangeEvent;
 import rx.android.widget.WidgetObservable;
 import rx.functions.Func3;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -85,6 +87,11 @@ public class RegistrationActivity extends AppCompatActivity {
             registrationModel.setPassword(mChoosePassword.getText().toString());
             mEventBus.post(registrationModel);
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     private void checkValidation() {

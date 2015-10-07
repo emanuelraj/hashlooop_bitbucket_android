@@ -1,24 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView android:id="@+id/card_view"
-                                    xmlns:android="http://schemas.android.com/apk/res/android"
-                                    xmlns:cardview="http://schemas.android.com/apk/res-auto"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:clickable="true"
-                                    android:foreground="?attr/selectableItemBackgroundBorderless"
-                                    android:orientation="vertical"
-                                    cardview:cardCornerRadius="5dp"
-                                    cardview:cardPreventCornerOverlap="true"
-                                    cardview:cardUseCompatPadding="true"
-                                    cardview:contentPadding="10dp">
+<android.support.v7.widget.CardView
+    android:id="@+id/card_view"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:orientation="vertical"
+    cardview:cardCornerRadius="5dp"
+    cardview:cardPreventCornerOverlap="true"
+    cardview:cardUseCompatPadding="true">
 
-    <TextView
-        android:id="@+id/list_item"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="10dp"
-        android:textColor="@color/colorPrimary"
-        android:textSize="17sp"/>
+        android:background="#55DDDDDD"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="2dp"
+                android:padding="5dp"
+                android:background="@color/colorPrimary"
+                android:src="@drawable/user_icon"/>
+
+            <TextView
+                android:id="@+id/looop_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/image"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/looop_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/looop_details"
+                android:layout_below="@+id/looop_details"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:textColor="#444444"
+                android:textSize="15sp"/>
+
+        </RelativeLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:foreground="?attr/selectableItemBackgroundBorderless">
+
+            <TextView
+                android:id="@+id/like"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/like_background_selector"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:gravity="center"
+                android:padding="6dp"
+                android:text="Like"
+                android:textColor="@drawable/like_text_color_selector"
+                android:textSize="16sp"/>
+
+        </FrameLayout>
+
+    </LinearLayout>
 
 </android.support.v7.widget.CardView>

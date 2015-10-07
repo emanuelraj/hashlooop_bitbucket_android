@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Looop</string>
+    <string name="app_name">#Looop</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -15,11 +15,11 @@
     <string name="please_enter_password">Please enter valid Password</string>
     <string name="already_registered">User already registered</string>
     <string name="registration_successful">Registration Successful</string>
-    <string name="sign_in_successful">SignIn Successful</string>
+    <string name="sign_in_successful">Login Successful</string>
     <string name="please_check_username_or_password">Please check username or password.</string>
     <string name="login">Login</string>
-    <string name="pooling">Looop</string>
     <string name="title">#Looop</string>
     <string name="title_activity_compose_status">ComposeStatusActivity</string>
     <string name="post">POST</string>
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
 </resources>

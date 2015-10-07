@@ -4,15 +4,18 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.hash.loop.model.FeedLooopResponse;
 import com.hash.loop.model.FetchLoopsRequest;
 import com.hash.loop.model.LoginRequestModel;
 import com.hash.loop.model.LoginResponseModel;
+import com.hash.loop.model.LooopLikeRequest;
 import com.hash.loop.model.PostLooopRequest;
 import com.hash.loop.model.PostLooopResponse;
 import com.hash.loop.model.RegistrationRequestModel;
@@ -30,7 +33,7 @@ import timber.log.Timber;
  */
 public class SocketService extends Service {
 
-    private static final String TAG = "!POOLING_";
+    private static final String TAG = "!Looop";
     private Socket mSocket;
     private EventBus mEventBus = EventBus.getDefault();
     private MySharedPreference mPrefs;
@@ -58,6 +61,9 @@ public class SocketService extends Service {
         public void call(Object... args) {
             Timber.tag(TAG + "STATUS");
             Timber.e("Connected");
+            if (!TextUtils.isEmpty(mPrefs.getUserId())) {
+                updateSocketId();
+            }
         }
     };
 
@@ -85,13 +91,29 @@ public class SocketService extends Service {
         }
     };
 
+    private Emitter.Listener onSocketUpdateSuccess = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            Timber.tag(TAG + "RECEIVED");
+            Timber.d(args[0].toString());
+        }
+    };
+
+    private Emitter.Listener onLikeResponse = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            Timber.tag(TAG + "RECEIVED");
+            Timber.d(args[0].toString());
+        }
+    };
+
     private Emitter.Listener onPostLooopResponse = new Emitter.Listener() {
         @Override
         public void call(Object... args) {
             Timber.tag(TAG + "RECEIVED");
             Timber.d(args[0].toString());
             Gson gson = new Gson();
-            PostLooopResponse postLooopResponse= gson.fromJson(args[0].toString(),
+            PostLooopResponse postLooopResponse = gson.fromJson(args[0].toString(),
                     PostLooopResponse.class);
             mEventBus.post(postLooopResponse);
         }
@@ -147,7 +169,15 @@ public class SocketService extends Service {
         mSocket.on(Constants.REGISTRATION_RESPONSE, onRegistrationResponse);
         mSocket.on(Constants.LOGIN_RESPONSE, onLoginSuccess);
         mSocket.on(Constants.LOOOP_POST_RESPONSE, onPostLooopResponse);
-        mSocket.on(Constants.FETCH_LOOOPS_RESPONSE,onLooopsFeedResponse);
+        mSocket.on(Constants.FETCH_LOOOPS_RESPONSE, onLooopsFeedResponse);
+        mSocket.on(Constants.RECONNECT_RESPONSE, onSocketUpdateSuccess);
+        mSocket.on(Constants.LIKE_RESPONSE,onLikeResponse);
+    }
+
+    private void updateSocketId() {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("user_id", mPrefs.getUserId());
+        mSocket.emit(Constants.RECONNECT, jsonObject);
     }
 
     public void onEvent(LoginRequestModel requestModel) {
@@ -159,16 +189,23 @@ public class SocketService extends Service {
 
     public void onEvent(PostLooopRequest postLooopRequest) {
         Gson gson = new Gson();
-        Timber.tag(TAG + "SENDIN");
+        Timber.tag(TAG + "SENDING");
         Timber.d(gson.toJson(postLooopRequest));
         mSocket.emit(Constants.NEW_LOOOP, gson.toJson(postLooopRequest));
     }
 
     public void onEvent(FetchLoopsRequest fetchLoopsRequest) {
         Gson gson = new Gson();
-        Timber.tag(TAG + "SENDIN");
+        Timber.tag(TAG + "SENDING");
         Timber.d(gson.toJson(fetchLoopsRequest));
         mSocket.emit(Constants.FETCH_LOOOPS_REQUEST, gson.toJson(fetchLoopsRequest));
+    }
+
+    public void onEvent(LooopLikeRequest loopLikeRequest) {
+        Gson gson = new Gson();
+        Timber.tag(TAG + "SENDING");
+        Timber.d(gson.toJson(loopLikeRequest));
+        mSocket.emit(Constants.LIKE_REQUEST, gson.toJson(loopLikeRequest));
     }
 
     @Override

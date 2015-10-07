@@ -1,10 +1,16 @@
 package com.hash.loop;
 
+import android.content.Context;
 import android.content.IntentSender;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,6 +35,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ComposeLooopActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
@@ -36,6 +43,8 @@ public class ComposeLooopActivity extends AppCompatActivity implements GoogleApi
     EditText mStatusField;
     @Bind(R.id.post)
     TextView mPost;
+    @Bind(R.id.toolbar)
+    Toolbar mToolbar;
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
     private Location mCurrentLocation;
@@ -48,6 +57,16 @@ public class ComposeLooopActivity extends AppCompatActivity implements GoogleApi
         setContentView(R.layout.activity_compose_status);
         ButterKnife.bind(this);
         mBus.register(this);
+        setSupportActionBar(mToolbar);
+        mToolbar.setTitle("Post Looops");
+        mToolbar.setTitleTextColor(Color.WHITE);
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null) {
+            actionBar.setHomeButtonEnabled(true);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowTitleEnabled(true);
+            actionBar.setTitle("Post Looops");
+        }
         mPrefs = new MySharedPreference(getApplicationContext());
         buildGoogleApiClient();
     }
@@ -64,12 +83,36 @@ public class ComposeLooopActivity extends AppCompatActivity implements GoogleApi
         }
     }
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     public void onEvent(PostLooopResponse postLooopResponse) {
-        if(postLooopResponse.getStatus() == 1) {
+        if (postLooopResponse.getStatus() == 1) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(getApplicationContext(), "Looop posted succesfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Looop posted Succesfully.", Toast.LENGTH_SHORT).show();
+                    finish();
+                }
+            });
+        } else if (postLooopResponse.getStatus() == 2) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "Looops Posted Successfully!! You are the Discoverer of that Location.", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             });
@@ -78,9 +121,12 @@ public class ComposeLooopActivity extends AppCompatActivity implements GoogleApi
 
     @OnClick(R.id.post)
     public void postNewLooop() {
-        if(mCurrentLocation == null) {
-            Toast.makeText(getApplicationContext(),"Please enable location service", Toast
+        if (mCurrentLocation == null) {
+            Toast.makeText(getApplicationContext(), "Please enable location service", Toast
                     .LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(mStatusField.getText().toString())) {
             return;
         }
         PostLooopRequest postLooopRequest = new PostLooopRequest();

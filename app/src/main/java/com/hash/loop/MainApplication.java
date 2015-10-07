@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Intent;
 
 import timber.log.Timber;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
  * Created by mathan on 4/10/15.
@@ -14,6 +15,10 @@ public class MainApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Timber.plant(new Timber.DebugTree());
-        startService(new Intent(getApplicationContext(),SocketService.class));
+        startService(new Intent(getApplicationContext(), SocketService.class));
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("fonts/Roboto-Regular.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build());
     }
 }
