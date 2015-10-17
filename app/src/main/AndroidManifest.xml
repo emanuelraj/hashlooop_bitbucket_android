@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.hash.loop"
+<manifest package="com.hash.looop"
           xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools">
 
@@ -9,34 +9,34 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
-        android:name=".MainApplication"
+        android:name="com.hash.looop.MainApplication"
         android:allowBackup="true"
         android:icon="@drawable/looop_logo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
         tools:replace="android:icon,android:theme">
         <activity
-            android:name=".MainActivity"
+            android:name="com.hash.looop.MainActivity"
             android:label="@string/app_name">
         </activity>
         <activity
-            android:name=".ComposeLooopActivity"
+            android:name="com.hash.looop.ComposeLooopActivity"
             android:label="@string/title_activity_compose_status"
             android:windowSoftInputMode="stateVisible|stateAlwaysVisible">
         </activity>
         <activity
-            android:name=".RegistrationActivity"
+            android:name="com.hash.looop.RegistrationActivity"
             android:label="@string/app_name">
 
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name="com.hash.looop.LoginActivity"
             android:label="@string/app_name"/>
 
-        <service android:name=".SocketService"/>
+        <service android:name="com.hash.looop.SocketService"/>
 
         <activity
-            android:name=".SplashScreenActivity"
+            android:name="com.hash.looop.SplashScreenActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

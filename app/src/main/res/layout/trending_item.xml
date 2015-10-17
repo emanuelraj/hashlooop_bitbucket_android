@@ -2,7 +2,6 @@
 <android.support.v7.widget.CardView
     android:id="@+id/card_view"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -26,43 +25,36 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/image"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/user_icon"
-                app:civ_border_color="@color/colorPrimary"
-                app:civ_border_width="2dp"/>
-
             <TextView
-                android:id="@+id/looop_details"
+                android:id="@+id/looop_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/image"
                 android:paddingBottom="5dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:textColor="@android:color/black"
                 android:textSize="20sp"/>
 
-            <ImageView
-                android:id="@+id/follow"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+            <TextView
+                android:id="@+id/like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:src="@drawable/looop_follow"/>
+                android:padding="10dp"
+                android:text="Like"
+                android:textColor="@drawable/like_text_color_selector"/>
 
             <TextView
-                android:id="@+id/looop_content"
+                android:id="@+id/looop_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/looop_details"
-                android:layout_below="@+id/looop_details"
+                android:layout_alignLeft="@+id/looop_content"
+                android:layout_below="@+id/looop_content"
                 android:paddingBottom="10dp"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:textColor="#444444"
-                android:textSize="15sp"/>
+                android:textSize="14sp"/>
 
         </RelativeLayout>
 
@@ -72,14 +64,14 @@
             android:foreground="?attr/selectableItemBackgroundBorderless">
 
             <TextView
-                android:id="@+id/like"
+                android:id="@+id/follow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/like_background_selector"
                 android:foreground="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
                 android:padding="6dp"
-                android:text="Like"
+                android:text="Follow"
                 android:textColor="@drawable/like_text_color_selector"
                 android:textSize="16sp"/>
 
