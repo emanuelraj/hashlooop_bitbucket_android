@@ -113,7 +113,7 @@ public class FeedsAdapter extends RecyclerView.Adapter<FeedsAdapter.ViewHolder> 
         @Bind(R.id.card_view)
         CardView mCardView;
         @Bind(R.id.like)
-        TextView mLike;
+        ImageView mLike;
         @Bind(R.id.follow)
         ImageView mFollow;
         @Bind(R.id.image)
@@ -122,7 +122,7 @@ public class FeedsAdapter extends RecyclerView.Adapter<FeedsAdapter.ViewHolder> 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            TextView likeView = (TextView) itemView.findViewById(R.id.like);
+            ImageView likeView = (ImageView) itemView.findViewById(R.id.like);
             likeView.setOnClickListener(this);
             ImageView followView = (ImageView) itemView.findViewById(R.id.follow);
             followView.setOnClickListener(this);

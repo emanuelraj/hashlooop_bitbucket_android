@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hash.looop.R;
@@ -17,6 +19,7 @@ import com.hash.looop.model.FollowRequest;
 import com.hash.looop.model.Looop;
 import com.hash.looop.model.LooopLikeRequest;
 import com.hash.looop.utils.MySharedPreference;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.List;
@@ -58,7 +61,7 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Looop looop = mLooopList.get(position);
-        holder.mLooopDetail.setText(looop.getName());
+        holder.mLooopDetails.setText(looop.getName());
         holder.mLike.setTag(looop.getId());
         holder.mLooopContent.setText(looop.getStatus());
         if (mFollowMap.get("" + looop.getUserId()) == 0) {
@@ -71,6 +74,8 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.ViewHo
         } else {
             holder.mFollow.setVisibility(View.GONE);
         }
+        Picasso.with(mContext).load("https://scontent.xx.fbcdn.net/hphotos-xtp1/v/t1.0-9/11168058_858144984222404_7536273263674152164_n.jpg?oh=9667cba30ed5fb925626e6f353b742ca&oe=5688C8A7")
+                .into(holder.mImage);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -101,23 +106,29 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.ViewHo
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        @Bind(R.id.image)
+        ImageView mImage;
         @Bind(R.id.looop_details)
-        TextView mLooopDetail;
+        TextView mLooopDetails;
+        @Bind(R.id.distance)
+        TextView mDistance;
         @Bind(R.id.looop_content)
         TextView mLooopContent;
+        @Bind(R.id.like)
+        ImageView mLike;
+        @Bind(R.id.like_layout)
+        LinearLayout mLikeLayout;
+        @Bind(R.id.follow)
+        ImageView mFollow;
         @Bind(R.id.card_view)
         CardView mCardView;
-        @Bind(R.id.like)
-        TextView mLike;
-        @Bind(R.id.follow)
-        TextView mFollow;
 
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            TextView likeView = (TextView) itemView.findViewById(R.id.like);
+            ImageView likeView = (ImageView) itemView.findViewById(R.id.like);
             likeView.setOnClickListener(this);
-            TextView followView = (TextView) itemView.findViewById(R.id.follow);
+            ImageView followView = (ImageView) itemView.findViewById(R.id.follow);
             followView.setOnClickListener(this);
         }
 

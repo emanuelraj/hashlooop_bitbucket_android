@@ -20,7 +20,6 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
                 android:text="@string/title"
                 android:textColor="@android:color/white"
                 android:textSize="@dimen/abc_text_size_title_material_toolbar"/>
@@ -32,9 +31,13 @@
             style="@style/MyCustomTabLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:tabBackground="@color/colorPrimary"
             app:tabGravity="fill"
+            app:tabIndicatorColor="@android:color/white"
             app:tabIndicatorHeight="3dp"
-            app:tabMode="fixed"/>
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@android:color/white"
+            app:tabTextColor="#DDDDDD"/>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -57,10 +60,11 @@
             android:layout_marginBottom="@dimen/codelab_fab_margin_bottom"
             android:layout_marginRight="@dimen/codelab_fab_margin_right"
             android:src="@drawable/plus"
+            app:backgroundTint="@color/colorPrimaryDark"
             app:elevation="3dp"
             app:fabSize="normal"
             tools:ignore="RtlCompat"/>
 
     </RelativeLayout>
-    
+
 </android.support.design.widget.CoordinatorLayout>

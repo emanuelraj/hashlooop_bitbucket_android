@@ -13,6 +13,18 @@
         <item name="android:windowBackground">@android:color/white</item>
     </style>
 
+    <style name="AppTheme.LoginScreen">
+        <item name="colorControlNormal">@color/colorAccentLogin</item>
+        <item name="colorControlActivated">@color/colorAccentLogin</item>
+        <item name="colorControlHighlight">@color/colorAccentLogin</item>
+    </style>
+
+    <style name="AppTheme.Registration">
+        <item name="colorControlNormal">@color/colorAccentLogin</item>
+        <item name="colorControlActivated">@color/colorAccentLogin</item>
+        <item name="colorControlHighlight">@color/colorAccentLogin</item>
+    </style>
+
     <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
         <item name="tabIndicatorColor">@color/colorAccent</item>
     </style>

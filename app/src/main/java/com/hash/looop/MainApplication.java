@@ -17,7 +17,7 @@ public class MainApplication extends Application {
         Timber.plant(new Timber.DebugTree());
         startService(new Intent(getApplicationContext(), SocketService.class));
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/Bakersfield_Bold.ttf")
+                .setDefaultFontPath("fonts/Lato_Regular.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build());
     }

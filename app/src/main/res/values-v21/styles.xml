@@ -19,4 +19,12 @@
         <item name="android:windowContentTransitions">true</item>
 
     </style>
+
+    <style name="AppTheme.LoginScreen">
+        <item name="colorControlNormal">@color/colorAccentLogin</item>
+        <item name="colorControlActivated">@color/colorAccentLogin</item>
+        <item name="colorControlHighlight">@color/colorAccentLogin</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
 </resources>

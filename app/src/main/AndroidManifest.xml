@@ -26,12 +26,14 @@
         </activity>
         <activity
             android:name="com.hash.looop.RegistrationActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.Registration">
 
         </activity>
         <activity
             android:name="com.hash.looop.LoginActivity"
-            android:label="@string/app_name"/>
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.LoginScreen"/>
 
         <service android:name="com.hash.looop.SocketService"/>
 

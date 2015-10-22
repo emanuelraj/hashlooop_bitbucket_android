@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     @Bind(R.id.post_new_looop)
     FloatingActionButton mPostNewLooop;
     private int[] tabIcons = {
-            R.drawable.feed,
             R.drawable.trending,
+            R.drawable.chain,
             R.drawable.profile
     };
     private GoogleApiClient mGoogleApiClient;
@@ -177,14 +177,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new TrendingTabFragment());
-        adapter.addFragment(new FeedTabFragment());
+        adapter.addFragment(new TrendingTabFragment(),"Trending");
+        adapter.addFragment(new FeedTabFragment(),"Looops");
         viewPager.setAdapter(adapter);
     }
 
     private void setupTabIcons() {
-        mTabs.getTabAt(0).setIcon(tabIcons[1]);
-        mTabs.getTabAt(1).setIcon(tabIcons[0]);
+        /*mTabs.getTabAt(0).setIcon(tabIcons[0]);
+        mTabs.getTabAt(1).setIcon(tabIcons[1]);*/
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -221,6 +221,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
         private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mTitleList = new ArrayList<>();
 
         public ViewPagerAdapter(FragmentManager manager) {
             super(manager);
@@ -236,13 +237,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             return mFragmentList.size();
         }
 
-        public void addFragment(Fragment fragment) {
+        public void addFragment(Fragment fragment, String trending) {
             mFragmentList.add(fragment);
+            mTitleList.add(trending);
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return null;
+            return mTitleList.get(position);
         }
     }
 
