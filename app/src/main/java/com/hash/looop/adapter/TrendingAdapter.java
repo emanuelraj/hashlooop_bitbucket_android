@@ -73,7 +73,7 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        Looop looop = mLooopList.get(position);
+        final Looop looop = mLooopList.get(position);
         holder.mLooopDetail.setText(looop.getName());
         Typeface typeface = Typeface.createFromAsset(mContext.getAssets(), "fonts/Lato_Regular.ttf");
         holder.mLooopDetail.setTypeface(typeface, Typeface.BOLD);
@@ -92,16 +92,10 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.ViewHo
 
         if (looop.getStatusType() != null && looop.getStatusType() == 1) {
             holder.mLooopImage.setVisibility(View.GONE);
-            RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) holder.mCardView.getLayoutParams();
-            params.height = dpToPx(200);
-            holder.mCardView.setLayoutParams(params);
             holder.mLooopContent.setEllipsize(null);
             holder.mLooopContent.setMaxLines(10);
         } else if (looop.getStatusType() != null && looop.getStatusType() == 2) {
             holder.mLooopImage.setVisibility(View.VISIBLE);
-            RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) holder.mCardView.getLayoutParams();
-            params.height = dpToPx(280);
-            holder.mCardView.setLayoutParams(params);
             Picasso.with(mContext).load(looop.getImageUrl()).into(holder.mLooopImage);
             holder.mLooopContent.setEllipsize(TextUtils.TruncateAt.END);
             holder.mLooopContent.setMaxLines(1);
@@ -128,7 +122,7 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.ViewHo
                 ".0-9/11168058_858144984222404_7536273263674152164_n.jpg?oh=9667cba30ed5fb925626e6f353b742ca&oe=5688C8A7")
                 .into(holder.mProfile);*/
 
-        if(!TextUtils.isEmpty(looop.getName())) {
+        if (!TextUtils.isEmpty(looop.getName())) {
             ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
             int color = generator.getColor(looop.getName().charAt(0));
             TextDrawable drawable = TextDrawable.builder()

@@ -48,11 +48,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     ViewPager mViewpager;
     @Bind(R.id.post_new_looop)
     FloatingActionButton mPostNewLooop;
-    private int[] tabIcons = {
+    /*private int[] tabIcons = {
             R.drawable.trending,
             R.drawable.chain,
             R.drawable.profile
-    };
+    };*/
     private GoogleApiClient mGoogleApiClient;
     private LocationRequest mLocationRequest;
     private Location mCurrentLocation;

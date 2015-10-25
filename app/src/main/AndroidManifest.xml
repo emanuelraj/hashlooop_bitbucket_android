@@ -27,7 +27,7 @@
         <activity
             android:name="com.hash.looop.RegistrationActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.Registration">
+            android:theme="@style/AppTheme.LoginScreen">
 
         </activity>
         <activity
