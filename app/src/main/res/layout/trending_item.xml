@@ -5,11 +5,11 @@
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="240dp"
     android:clickable="true"
     android:orientation="vertical"
-    cardview:cardCornerRadius="5dp"
     cardview:cardBackgroundColor="@android:color/white"
+    cardview:cardCornerRadius="3dp"
     cardview:cardPreventCornerOverlap="true"
     cardview:cardUseCompatPadding="true">
 
@@ -30,9 +30,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/image"
             android:paddingLeft="10dp"
-            android:layout_marginTop="10dp"
             android:paddingRight="10dp"
             android:textColor="@android:color/black"
             android:textSize="16sp"
@@ -48,47 +48,61 @@
             android:paddingBottom="5dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
+            android:text=""
             android:textColor="#AEB0B7"
-            android:textSize="12sp"
-            android:text="5 km Near you"/>
+            android:textSize="12sp"/>
 
         <TextView
             android:id="@+id/looop_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:paddingBottom="20dp"
-            android:paddingRight="10dp"
             android:layout_below="@+id/distance"
-            android:maxLength="160"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
             android:layout_toRightOf="@+id/image"
+            android:ellipsize="end"
+            android:maxLength="160"
+            android:maxLines="1"
+            android:paddingRight="10dp"
             android:textColor="#444444"
             android:textSize="14sp"
             tools:text="A simple act of kindness creates an endless ripple. That comes back to you"/>
+
+        <ImageView
+            android:id="@+id/looop_image"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_below="@+id/looop_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/image"/>
 
         <LinearLayout
             android:id="@+id/like_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:paddingBottom="10dp"
+            android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/image"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingBottom="10dp">
 
             <ImageView
                 android:id="@+id/like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_gravity="center"
                 android:src="@drawable/like_selector"/>
 
             <TextView
+                android:id="@+id/total_likes"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="100"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
                 android:layout_marginLeft="10dp"
                 android:gravity="center"
+                android:text=""
                 android:textColor="#AEB0B7"/>
 
         </LinearLayout>
@@ -97,11 +111,11 @@
             android:id="@+id/follow"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginBottom="10dp"
-            android:paddingBottom="10dp"
             android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/like_layout"
+            android:paddingBottom="10dp"
             android:src="@drawable/follow_icon"/>
 
     </RelativeLayout>

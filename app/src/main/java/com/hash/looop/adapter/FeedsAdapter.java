@@ -3,9 +3,11 @@ package com.hash.looop.adapter;
 import android.animation.Animator;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -13,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.hash.looop.R;
 import com.hash.looop.model.FollowRequest;
 import com.hash.looop.model.Looop;
@@ -20,6 +24,9 @@ import com.hash.looop.model.LooopLikeRequest;
 import com.hash.looop.utils.MySharedPreference;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -62,6 +69,8 @@ public class FeedsAdapter extends RecyclerView.Adapter<FeedsAdapter.ViewHolder> 
     public void onBindViewHolder(ViewHolder holder, int position) {
         Looop looop = mLooopList.get(position);
         holder.mLooopDetail.setText(looop.getName());
+        Typeface typeface = Typeface.createFromAsset(mContext.getAssets(),"fonts/Lato_Regular.ttf");
+        holder.mLooopDetail.setTypeface(typeface, Typeface.BOLD);
         holder.mLike.setTag(looop.getId());
         holder.mLooopContent.setText(looop.getStatus());
         if (mFollowMap.get("" + looop.getUserId()) == 0) {
@@ -74,8 +83,67 @@ public class FeedsAdapter extends RecyclerView.Adapter<FeedsAdapter.ViewHolder> 
         } else {
             holder.mFollow.setVisibility(View.GONE);
         }
-        Picasso.with(mContext).load("https://scontent.xx.fbcdn.net/hphotos-xtp1/v/t1.0-9/11168058_858144984222404_7536273263674152164_n.jpg?oh=9667cba30ed5fb925626e6f353b742ca&oe=5688C8A7")
-                .into(holder.mProfile);
+
+        if (looop.getStatusType() != null && looop.getStatusType() == 1) {
+            holder.mLooopImage.setVisibility(View.GONE);
+        } else if (looop.getStatusType() != null && looop.getStatusType() == 2) {
+            holder.mLooopImage.setVisibility(View.VISIBLE);
+            Picasso.with(mContext).load(looop.getImageUrl()).into(holder.mLooopImage);
+        }
+
+        holder.mLooopTime.setText(getFormatedTime(looop.getPostedTime()));
+
+        if (looop.getIsLiked() != null && looop.getIsLiked() == 0) {
+            holder.mLike.setSelected(false);
+        } else if (looop.getIsLiked() != null && looop.getIsLiked() == 1) {
+            holder.mLike.setSelected(true);
+        }
+
+        if (looop.getTotalLikes() != null && looop.getTotalLikes() > 0) {
+            holder.mTotalLikes.setText("" + looop.getTotalLikes());
+            holder.mTotalLikes.setTag(looop.getTotalLikes());
+        } else {
+            holder.mTotalLikes.setTag(0);
+            holder.mTotalLikes.setText("");
+        }
+
+        Double distance = looop.getDistance();
+        if (distance != null) {
+            distance = Math.round(distance * 10) / 10.0;
+            if(distance > 0.0) {
+                holder.mDistance.setText("" + distance + " kms Near you");
+            } else {
+                holder.mDistance.setText("Near you");
+            }
+        } else {
+            holder.mDistance.setText("");
+        }
+
+        /*Picasso.with(mContext).load("https://scontent.xx.fbcdn.net/hphotos-xtp1/v/t1" +
+                ".0-9/11168058_858144984222404_7536273263674152164_n.jpg?oh=9667cba30ed5fb925626e6f353b742ca&oe=5688C8A7")
+                .into(holder.mProfile);*/
+
+        if (!TextUtils.isEmpty(looop.getName())) {
+            ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
+            int color = generator.getColor(looop.getName().charAt(0));
+            TextDrawable drawable2 = TextDrawable.builder()
+                    .buildRound(looop.getName().charAt(0) + "", color);
+            holder.mProfile.setImageDrawable(drawable2);
+        }
+    }
+
+    private String getFormatedTime(String time) {
+        String formattedTime = "";
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat outputFormatter = new SimpleDateFormat("MMM dd");
+        try {
+            Date date = formatter.parse(time);
+            formattedTime = outputFormatter.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        //Log.d("!Adapter", formattedTime);
+        return formattedTime;
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -118,6 +186,14 @@ public class FeedsAdapter extends RecyclerView.Adapter<FeedsAdapter.ViewHolder> 
         ImageView mFollow;
         @Bind(R.id.image)
         ImageView mProfile;
+        @Bind(R.id.looop_image)
+        ImageView mLooopImage;
+        @Bind(R.id.total_likes)
+        TextView mTotalLikes;
+        @Bind(R.id.looop_time)
+        TextView mLooopTime;
+        @Bind(R.id.distance)
+        TextView mDistance;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -132,6 +208,26 @@ public class FeedsAdapter extends RecyclerView.Adapter<FeedsAdapter.ViewHolder> 
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.like:
+                    if (mLike.isSelected()) {
+                        int totalLikes = (int) mTotalLikes.getTag();
+                        totalLikes = totalLikes - 1;
+                        if (totalLikes > 0) {
+                            mTotalLikes.setText("" + totalLikes);
+                        } else {
+                            mTotalLikes.setText("");
+                        }
+                        mTotalLikes.setTag(totalLikes);
+                    } else {
+                        int totalLikes = (int) mTotalLikes.getTag();
+                        totalLikes = totalLikes + 1;
+                        if (totalLikes > 0) {
+                            mTotalLikes.setText("" + totalLikes);
+                        } else {
+                            mTotalLikes.setText("");
+                        }
+
+                        mTotalLikes.setTag(totalLikes);
+                    }
                     mLike.setSelected(!mLike.isSelected());
                     LooopLikeRequest likeRequest = new LooopLikeRequest();
                     likeRequest.setUserId(mPrefs.getUserId());

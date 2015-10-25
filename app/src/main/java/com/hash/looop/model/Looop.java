@@ -21,6 +21,61 @@ public class Looop {
     private String name;
     @Expose
     private int relationship;
+    @SerializedName("image_url")
+    @Expose
+    private String mImageUrl;
+    @SerializedName("status_type")
+    @Expose
+    private Integer mStatusType;
+    @SerializedName("total_likes")
+    @Expose
+    private Integer mTotalLikes;
+    @SerializedName("posted_time")
+    @Expose
+    private String mPostedTime;
+    @SerializedName("like_status")
+    @Expose
+    private Integer isLiked;
+
+    public Integer getIsLiked() {
+        return isLiked;
+    }
+
+    public void setIsLiked(Integer isLiked) {
+        this.isLiked = isLiked;
+    }
+
+    public String getPostedTime() {
+        return mPostedTime;
+    }
+
+    public void setPostedTime(String postedTime) {
+        mPostedTime = postedTime;
+    }
+
+    public Integer getTotalLikes() {
+        return mTotalLikes;
+    }
+
+    public void setTotalLikes(Integer totalLikes) {
+        mTotalLikes = totalLikes;
+    }
+
+    public Integer getStatusType() {
+        return mStatusType;
+    }
+
+    public void setStatusType(Integer statusType) {
+        mStatusType = statusType;
+    }
+
+    public String getImageUrl() {
+        return mImageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        mImageUrl = imageUrl;
+    }
 
     public int getRelationship() {
         return relationship;

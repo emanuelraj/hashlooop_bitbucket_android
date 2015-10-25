@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.hash.looop.model.FollowResponse;
 import com.hash.looop.model.Looop;
 import com.hash.looop.model.RefreshModel;
 import com.hash.looop.utils.MySharedPreference;
+import com.hash.looop.utils.SpacesItemDecoration;
 
 import java.util.HashMap;
 import java.util.List;
@@ -50,6 +52,7 @@ public class FeedTabFragment extends Fragment {
         LinearLayoutManager manager = new LinearLayoutManager(getActivity(), LinearLayoutManager
                 .VERTICAL, false);
         mFeedList.setLayoutManager(manager);
+        mFeedList.addItemDecoration(new SpacesItemDecoration(dpToPx(5),dpToPx(5)));
         mAdapter = new FeedsAdapter(getActivity());
         mFeedList.setAdapter(mAdapter);
         /*mFeedList.addOnItemTouchListener(
@@ -64,6 +67,12 @@ public class FeedTabFragment extends Fragment {
         );*/
 
         return view;
+    }
+
+    public int dpToPx(int dp) {
+        DisplayMetrics displayMetrics = getContext().getResources().getDisplayMetrics();
+        int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+        return px;
     }
 
     public void onEventMainThread(FollowResponse followResponse) {

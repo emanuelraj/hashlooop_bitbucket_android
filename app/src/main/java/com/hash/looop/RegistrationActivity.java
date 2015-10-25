@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.Toast;
 
 import com.hash.looop.model.RegistrationRequestModel;
@@ -65,6 +66,9 @@ public class RegistrationActivity extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
         }
+
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
 
         mNameChangeObservable = WidgetObservable.text(mName);
         mEmailChangeObservable = WidgetObservable.text(mEmailId);

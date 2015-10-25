@@ -7,7 +7,8 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:elevation="5dp">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -17,12 +18,10 @@
             app:layout_scrollFlags="scroll|enterAlways"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-            <TextView
-                android:layout_width="match_parent"
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/title"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/abc_text_size_title_material_toolbar"/>
+                android:src="@drawable/logo_on_feed_page"/>
 
         </android.support.v7.widget.Toolbar>
 

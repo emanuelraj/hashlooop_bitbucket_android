@@ -3,17 +3,21 @@ package com.hash.looop.adapter;
 import android.animation.Animator;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
+import com.amulyakhare.textdrawable.util.ColorGenerator;
 import com.hash.looop.R;
 import com.hash.looop.model.FollowRequest;
 import com.hash.looop.model.Looop;
@@ -21,6 +25,9 @@ import com.hash.looop.model.LooopLikeRequest;
 import com.hash.looop.utils.MySharedPreference;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -58,10 +65,18 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.ViewHo
         return holder;
     }
 
+    public int dpToPx(int dp) {
+        DisplayMetrics displayMetrics = mContext.getResources().getDisplayMetrics();
+        int px = Math.round(dp * (displayMetrics.xdpi / DisplayMetrics.DENSITY_DEFAULT));
+        return px;
+    }
+
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, int position) {
         Looop looop = mLooopList.get(position);
-        holder.mLooopDetails.setText(looop.getName());
+        holder.mLooopDetail.setText(looop.getName());
+        Typeface typeface = Typeface.createFromAsset(mContext.getAssets(), "fonts/Lato_Regular.ttf");
+        holder.mLooopDetail.setTypeface(typeface, Typeface.BOLD);
         holder.mLike.setTag(looop.getId());
         holder.mLooopContent.setText(looop.getStatus());
         if (mFollowMap.get("" + looop.getUserId()) == 0) {
@@ -74,8 +89,67 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.ViewHo
         } else {
             holder.mFollow.setVisibility(View.GONE);
         }
-        Picasso.with(mContext).load("https://scontent.xx.fbcdn.net/hphotos-xtp1/v/t1.0-9/11168058_858144984222404_7536273263674152164_n.jpg?oh=9667cba30ed5fb925626e6f353b742ca&oe=5688C8A7")
-                .into(holder.mImage);
+
+        if (looop.getStatusType() != null && looop.getStatusType() == 1) {
+            holder.mLooopImage.setVisibility(View.GONE);
+            RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) holder.mCardView.getLayoutParams();
+            params.height = dpToPx(200);
+            holder.mCardView.setLayoutParams(params);
+            holder.mLooopContent.setEllipsize(null);
+            holder.mLooopContent.setMaxLines(10);
+        } else if (looop.getStatusType() != null && looop.getStatusType() == 2) {
+            holder.mLooopImage.setVisibility(View.VISIBLE);
+            RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) holder.mCardView.getLayoutParams();
+            params.height = dpToPx(280);
+            holder.mCardView.setLayoutParams(params);
+            Picasso.with(mContext).load(looop.getImageUrl()).into(holder.mLooopImage);
+            holder.mLooopContent.setEllipsize(TextUtils.TruncateAt.END);
+            holder.mLooopContent.setMaxLines(1);
+        }
+
+        if (looop.getIsLiked() != null && looop.getIsLiked() == 0) {
+            holder.mLike.setSelected(false);
+        } else if (looop.getIsLiked() != null && looop.getIsLiked() == 1) {
+            holder.mLike.setSelected(true);
+        }
+
+        Double distance = looop.getDistance();
+        if (distance != null) {
+            distance = Math.round(distance * 10) / 10.0;
+            if (distance > 0.0) {
+                holder.mDistance.setText("" + distance + " kms Near you");
+            } else {
+                holder.mDistance.setText("Near you");
+            }
+        } else {
+            holder.mDistance.setText("");
+        }
+        /*Picasso.with(mContext).load("https://scontent.xx.fbcdn.net/hphotos-xtp1/v/t1" +
+                ".0-9/11168058_858144984222404_7536273263674152164_n.jpg?oh=9667cba30ed5fb925626e6f353b742ca&oe=5688C8A7")
+                .into(holder.mProfile);*/
+
+        if(!TextUtils.isEmpty(looop.getName())) {
+            ColorGenerator generator = ColorGenerator.MATERIAL; // or use DEFAULT
+            int color = generator.getColor(looop.getName().charAt(0));
+            TextDrawable drawable = TextDrawable.builder()
+                    .buildRect(looop.getName().charAt(0) + "", color);
+            holder.mProfile.setImageDrawable(drawable);
+        }
+
+    }
+
+    private String getFormatedTime(String time) {
+        String formattedTime = "";
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat outputFormatter = new SimpleDateFormat("MMM dd");
+        try {
+            Date date = formatter.parse(time);
+            formattedTime = outputFormatter.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        //Log.d("!Adapter", formattedTime);
+        return formattedTime;
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -106,22 +180,22 @@ public class TrendingAdapter extends RecyclerView.Adapter<TrendingAdapter.ViewHo
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @Bind(R.id.image)
-        ImageView mImage;
         @Bind(R.id.looop_details)
-        TextView mLooopDetails;
-        @Bind(R.id.distance)
-        TextView mDistance;
+        TextView mLooopDetail;
         @Bind(R.id.looop_content)
         TextView mLooopContent;
-        @Bind(R.id.like)
-        ImageView mLike;
-        @Bind(R.id.like_layout)
-        LinearLayout mLikeLayout;
-        @Bind(R.id.follow)
-        ImageView mFollow;
         @Bind(R.id.card_view)
         CardView mCardView;
+        @Bind(R.id.like)
+        ImageView mLike;
+        @Bind(R.id.follow)
+        ImageView mFollow;
+        @Bind(R.id.image)
+        ImageView mProfile;
+        @Bind(R.id.looop_image)
+        ImageView mLooopImage;
+        @Bind(R.id.distance)
+        TextView mDistance;
 
         public ViewHolder(View itemView) {
             super(itemView);

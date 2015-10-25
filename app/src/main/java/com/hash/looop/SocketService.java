@@ -6,9 +6,6 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
-import com.github.nkzawa.emitter.Emitter;
-import com.github.nkzawa.socketio.client.IO;
-import com.github.nkzawa.socketio.client.Socket;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.hash.looop.model.FeedLooopResponse;
@@ -18,6 +15,7 @@ import com.hash.looop.model.FollowResponse;
 import com.hash.looop.model.LoginRequestModel;
 import com.hash.looop.model.LoginResponseModel;
 import com.hash.looop.model.LooopLikeRequest;
+import com.hash.looop.model.PostLooopImage;
 import com.hash.looop.model.PostLooopRequest;
 import com.hash.looop.model.PostLooopResponse;
 import com.hash.looop.model.RegistrationRequestModel;
@@ -30,6 +28,9 @@ import com.hash.looop.utils.MySharedPreference;
 import java.net.URISyntaxException;
 
 import de.greenrobot.event.EventBus;
+import io.socket.client.IO;
+import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 import timber.log.Timber;
 
 /**
@@ -201,7 +202,7 @@ public class SocketService extends Service {
         mSocket.on(Constants.RECONNECT_RESPONSE, onSocketUpdateSuccess);
         mSocket.on(Constants.LIKE_RESPONSE, onLikeResponse);
         mSocket.on(Constants.TRENDING_LOOOPS_RESPONSE, onTrendingLooopResponse);
-        mSocket.on(Constants.FOLLOW_RESPONSE,onFollowResponse);
+        mSocket.on(Constants.FOLLOW_RESPONSE, onFollowResponse);
     }
 
     private void updateSocketId() {
@@ -253,6 +254,13 @@ public class SocketService extends Service {
         Timber.tag(TAG + "SENDING");
         Timber.d(Constants.NEW_FOLLOW_REQUEST + " - " + gson.toJson(followRequest));
         mSocket.emit(Constants.NEW_FOLLOW_REQUEST, gson.toJson(followRequest));
+    }
+
+    public void onEvent(PostLooopImage postLooopImage) {
+        Gson gson = new Gson();
+        Timber.tag(TAG + "SENDING");
+        Timber.d(Constants.NEW_IMAGE_LOOOP+ " - " + gson.toJson(postLooopImage));
+        mSocket.emit(Constants.NEW_IMAGE_LOOOP, gson.toJson(postLooopImage));
     }
 
     @Override

@@ -15,6 +15,7 @@ public class Constants {
     public static final String LIKE_REQUEST = "like_looops";
     public static final String TRENDING_LOOOPS_REQUEST = "fetch_trending_looops";
     public static final String NEW_FOLLOW_REQUEST = "new_follow";
+    public static final String NEW_IMAGE_LOOOP = "new_image_looop";
 
     //Response events
     public static final String REGISTRATION_RESPONSE = "registration_response";
@@ -33,4 +34,5 @@ public class Constants {
 
     public static final int OTHER = 1;
     public static final int ME = 2;
+    public static final String UNIQUE_FILE_NAME = "looop_image";
 }

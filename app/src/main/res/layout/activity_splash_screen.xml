@@ -6,21 +6,10 @@
                 android:gravity="center"
                 tools:context="com.hash.looop.SplashScreenActivity">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_below="@+id/looop"
-        android:text="#Looop"
-        android:textColor="@android:color/white"
-        android:textSize="40sp"/>
-
     <ImageView
-        android:id="@+id/looop"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:src="@drawable/looop_big"/>
+        android:layout_height="match_parent"
+        android:src="@drawable/new_splash_screen2"/>
 
 
 </RelativeLayout>
