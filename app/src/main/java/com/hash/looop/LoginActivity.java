@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.hash.looop.model.LoginRequestModel;
 import com.hash.looop.model.LoginResponseModel;
 import com.hash.looop.utils.MySharedPreference;
@@ -41,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     TextView mSignUp;
     private EventBus mEventBus = EventBus.getDefault();
     private MySharedPreference mPrefs;
+    private MaterialDialog.Builder mDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +55,18 @@ public class LoginActivity extends AppCompatActivity {
         mPrefs = new MySharedPreference(getApplicationContext());
     }
 
+    private void showProgressDialog() {
+        if(mDialog == null) {
+            mDialog = new MaterialDialog.Builder(this)
+                    .content(R.string.please_wait)
+                    .progress(true, 100);
+            mDialog.show();
+        }
+    }
+
     @OnClick(R.id.sign_up)
     public void gotoRegistrationScreen() {
-        startActivity(new Intent(getApplicationContext(),RegistrationActivity.class));
+        startActivity(new Intent(getApplicationContext(), RegistrationActivity.class));
         finish();
     }
 
@@ -78,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             mPasswordInputLayout.setError(null);
         }
-
+        showProgressDialog();
         if (isEmailValid && isPasswordValid) {
             LoginRequestModel loginRequestModel = new LoginRequestModel();
             loginRequestModel.setEmail(mEmailId.getText().toString());

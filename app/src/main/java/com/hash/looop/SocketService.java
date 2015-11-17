@@ -160,6 +160,18 @@ public class SocketService extends Service {
         }
     };
 
+    private Emitter.Listener onNotificationResponse = new Emitter.Listener() {
+        @Override
+        public void call(Object... args) {
+            Timber.tag(TAG + "RECEIVED");
+            Timber.d(args[0].toString());
+            Gson gson = new Gson();
+            FollowResponse followResponse = gson.fromJson(args[0].toString(),
+                    FollowResponse.class);
+            mEventBus.post(followResponse);
+        }
+    };
+
     {
         try {
             mSocket = IO.socket(Constants.SOCKET_URL);
@@ -203,6 +215,7 @@ public class SocketService extends Service {
         mSocket.on(Constants.LIKE_RESPONSE, onLikeResponse);
         mSocket.on(Constants.TRENDING_LOOOPS_RESPONSE, onTrendingLooopResponse);
         mSocket.on(Constants.FOLLOW_RESPONSE, onFollowResponse);
+        mSocket.on(Constants.LOOOP_POST_NOTIFICATION,onNotificationResponse);
     }
 
     private void updateSocketId() {

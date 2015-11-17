@@ -3,9 +3,14 @@
     <color name="colorPrimary">#00B8D4</color>
     <!--<color name="colorPrimary">#7323DC</color>-->
     <!--<color name="colorPrimaryDark">#5619AA</color>-->
-    <color name="colorPrimaryDark">#009BAF</color>
+    <color name="colorPrimaryDark">#00B8D4</color>
     <color name="colorAccent">#E8277A</color>
     <color name="shade_color">#555555</color>
     <color name="colorAccentLogin">#cac240</color>
     <color name="whiteLight">#CCCCCC</color>
+
+    <color name="color1">#00B8D4</color>
+    <color name="color2">#E8277A</color>
+    <color name="color3">#cac240</color>
+
 </resources>

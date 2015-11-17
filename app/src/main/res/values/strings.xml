@@ -23,4 +23,6 @@
     <string name="post">POST</string>
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
     <string name="create_new_account">CREATE NEW ACCOUNT</string>
+    <string name="please_wait">Please wait...</string>
+    <string name="enter_password">Enter Password</string>
 </resources>

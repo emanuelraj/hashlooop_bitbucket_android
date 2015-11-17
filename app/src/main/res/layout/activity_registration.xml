@@ -28,6 +28,7 @@
             android:layout_below="@+id/logo"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
+            android:textColorHint="@color/whiteLight"
             android:layout_marginTop="60dp">
 
             <android.support.v7.widget.AppCompatEditText
@@ -51,6 +52,7 @@
             android:layout_below="@+id/name_input_layout"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
+            android:textColorHint="@color/whiteLight"
             android:layout_marginTop="10dp">
 
             <android.support.v7.widget.AppCompatEditText
@@ -73,6 +75,7 @@
             android:layout_below="@+id/email_id_input_layout"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
+            android:textColorHint="@color/whiteLight"
             android:layout_marginTop="10dp">
 
             <android.support.v7.widget.AppCompatEditText

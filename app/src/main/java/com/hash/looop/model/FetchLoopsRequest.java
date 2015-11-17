@@ -13,6 +13,36 @@ public class FetchLoopsRequest {
     private Double mLat;
     @SerializedName("longitude")
     private Double mLong;
+    @SerializedName("max_id")
+    private int mMaxId;
+    @SerializedName("min_id")
+    private int mMinId;
+    @SerializedName("data_fetch_status")
+    private int mFetchRequest;
+
+    public int getFetchRequest() {
+        return mFetchRequest;
+    }
+
+    public void setFetchRequest(int fetchRequest) {
+        mFetchRequest = fetchRequest;
+    }
+
+    public int getMaxId() {
+        return mMaxId;
+    }
+
+    public void setMaxId(int maxId) {
+        mMaxId = maxId;
+    }
+
+    public int getMinId() {
+        return mMinId;
+    }
+
+    public void setMinId(int minId) {
+        mMinId = minId;
+    }
 
     public String getUserId() {
         return mUserId;

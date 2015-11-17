@@ -17,29 +17,34 @@
         tools:replace="android:icon,android:theme">
         <activity
             android:name="com.hash.looop.MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity
             android:name="com.hash.looop.ComposeLooopActivity"
             android:label="@string/title_activity_compose_status"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="stateVisible|stateAlwaysVisible">
         </activity>
         <activity
             android:name="com.hash.looop.RegistrationActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.LoginScreen">
+            android:theme="@style/AppTheme.LoginScreen"
+            android:configChanges="keyboardHidden|orientation|screenSize">
 
         </activity>
         <activity
             android:name="com.hash.looop.LoginActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.LoginScreen"/>
+            android:theme="@style/AppTheme.LoginScreen"
+            android:configChanges="keyboardHidden|orientation|screenSize"/>
 
         <service android:name="com.hash.looop.SocketService"/>
 
         <activity
             android:name="com.hash.looop.SplashScreenActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:configChanges="keyboardHidden|orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

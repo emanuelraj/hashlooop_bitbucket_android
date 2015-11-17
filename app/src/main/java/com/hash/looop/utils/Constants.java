@@ -27,6 +27,7 @@ public class Constants {
     public static final String LIKE_RESPONSE = "like_response";
     public static final String TRENDING_LOOOPS_RESPONSE = "trending_looop_in_that_location";
     public static final String FOLLOW_RESPONSE = "follow_response";
+    public static final String LOOOP_POST_NOTIFICATION = "looop_post_notification";
 
     //Preference keys
     public static final String USER_ID = "user_id";
@@ -35,4 +36,9 @@ public class Constants {
     public static final int OTHER = 1;
     public static final int ME = 2;
     public static final String UNIQUE_FILE_NAME = "looop_image";
+
+    //Constants
+    public static final int FETCH_NORMAL = 0;
+    public static final int FETCH_BOTTOM = 1;
+    public static final int FETCH_TOP = 2;
 }
